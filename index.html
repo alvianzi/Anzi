@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alvianus Nestha — Pengembang Web & IoT</title>
+<meta name="description" content="Portofolio Alvianus Nestha, lulusan Informatika Universitas Mulawarman dengan keahlian IoT dan pengembangan website.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="assets/favicon_io/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="android-chrome-192x192" href="assets/favicon_io/android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="android-chrome-512x512" href="assets/favicon_io/android-chrome-512x512.png">
+
+<style>
+  :root{
+    --bg: #0e1917;
+    --bg-alt: #122522;
+    --surface: #16302b;
+    --surface-alt: #1c3a34;
+    --amber: #e8a33d;
+    --amber-dim: #a97a35;
+    --signal: #6fcf97;
+    --text: #f2efe9;
+    --muted: #9db3ad;
+    --muted-dim: #6f8580;
+    --line: rgba(242,239,233,0.12);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --maxw: 1080px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{
+      animation-duration:0.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.001ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(111,207,151,0.06), transparent 40%),
+      radial-gradient(circle at 85% 30%, rgba(232,163,61,0.05), transparent 45%);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  ::selection{ background:var(--amber); color:var(--bg); }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    backdrop-filter:blur(10px);
+    background:rgba(14,25,23,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:64px;
+  }
+  .nav-mark{
+    font-family:var(--font-mono);
+    font-size:0.85rem;
+    letter-spacing:0.06em;
+    color:var(--signal);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .nav-mark .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--signal);
+    box-shadow:0 0 0 0 rgba(111,207,151,0.6);
+    animation:pulse-dot 2.4s ease-out infinite;
+  }
+  @keyframes pulse-dot{
+    0%{ box-shadow:0 0 0 0 rgba(111,207,151,0.55); }
+    70%{ box-shadow:0 0 0 8px rgba(111,207,151,0); }
+    100%{ box-shadow:0 0 0 0 rgba(111,207,151,0); }
+  }
+  .nav-links{
+    display:flex;
+    gap:28px;
+    font-size:0.9rem;
+    color:var(--muted);
+  }
+  .nav-links a{ position:relative; padding:4px 0; transition:color 0.2s; }
+  .nav-links a:hover{ color:var(--text); }
+  .nav-links a::after{
+    content:'';
+    position:absolute; left:0; bottom:-2px;
+    width:0; height:1px;
+    background:var(--amber);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  @media (max-width:720px){ .nav-links{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    align-items:center;
+    padding-top:64px;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    align-items:center;
+    width:100%;
+  }
+  @media (max-width:860px){
+    .hero .wrap{ grid-template-columns:1fr; }
+    .hero-visual{ order:-1; height:280px; }
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+    opacity:0;
+    animation:rise 0.7s ease forwards;
+    animation-delay:0.1s;
+  }
+  .eyebrow::before{
+    content:'';
+    width:22px; height:1px;
+    background:var(--amber);
+  }
+
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    margin-bottom:20px;
+    opacity:0;
+    animation:rise 0.75s ease forwards;
+    animation-delay:0.22s;
+  }
+  h1.title .accent{ color:var(--signal); }
+
+  .hero-desc{
+    font-size:1.05rem;
+    color:var(--muted);
+    max-width:46ch;
+    margin-bottom:32px;
+    opacity:0;
+    animation:rise 0.75s ease forwards;
+    animation-delay:0.34s;
+  }
+
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    opacity:0;
+    animation:rise 0.75s ease forwards;
+    animation-delay:0.46s;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(16px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 24px;
+    border-radius:6px;
+    font-size:0.92rem;
+    font-weight:600;
+    font-family:var(--font-body);
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-primary{
+    background:var(--amber);
+    color:#101b18;
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px -8px rgba(232,163,61,0.5);
+  }
+  .btn-ghost{
+    border-color:var(--line);
+    color:var(--text);
+  }
+  .btn-ghost:hover{
+    border-color:var(--signal);
+    color:var(--signal);
+    transform:translateY(-2px);
+  }
+
+  /* hero network visual */
+  .hero-visual{
+    position:relative;
+    height:440px;
+  }
+  .hero-visual svg{ width:100%; height:100%; overflow:visible; }
+  .net-line{
+    fill:none;
+    stroke:var(--line);
+    stroke-width:1.4;
+  }
+  .net-line-flow{
+    fill:none;
+    stroke:var(--signal);
+    stroke-width:1.4;
+    stroke-dasharray:3 9;
+    opacity:0.85;
+    animation:flow 3.2s linear infinite;
+  }
+  .net-line-flow.amber{ stroke:var(--amber); animation-duration:4s; }
+  @keyframes flow{ to{ stroke-dashoffset:-120; } }
+
+  .net-node-ring{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1;
+    opacity:0.35;
+    transform-origin:center;
+    animation:ring-pulse 2.6s ease-out infinite;
+  }
+  @keyframes ring-pulse{
+    0%{ transform:scale(0.8); opacity:0.45; }
+    100%{ transform:scale(1.6); opacity:0; }
+  }
+  .net-node{ fill:var(--bg-alt); stroke:currentColor; stroke-width:1.6; }
+  .net-label{
+    font-family:var(--font-mono);
+    font-size:11px;
+    fill:var(--muted);
+    letter-spacing:0.03em;
+  }
+  .net-center-label{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:20px;
+    fill:var(--text);
+  }
+
+  /* ---------- SECTION shell ---------- */
+  .section{
+    position:relative;
+    padding:110px 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:18px;
+    margin-bottom:52px;
+  }
+  .section-num{
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    color:var(--muted-dim);
+  }
+  .section-title{
+    font-family:var(--font-display);
+    font-size:clamp(1.6rem, 3.4vw, 2.3rem);
+    font-weight:600;
+  }
+  .section-sub{
+    color:var(--muted);
+    max-width:60ch;
+    margin-top:-32px;
+    margin-bottom:48px;
+    font-size:1rem;
+  }
+
+  .reveal{ opacity:1; }
+  .js .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .js .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ---------- SUMMARY ---------- */
+  .summary-grid{
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr 1fr;
+    gap:40px;
+  }
+  @media (max-width:980px){ .summary-grid{ grid-template-columns:1fr 1fr; } .summary-photo{ order:-1; } }
+  @media (max-width:640px){ .summary-grid{ grid-template-columns:1fr; } }
+  .summary-text p{ font-size:1.08rem; color:var(--muted); margin-bottom:16px; }
+  .summary-text strong{ color:var(--text); font-weight:600; }
+
+  .summary-photo{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    aspect-ratio:4/5;
+    background:var(--surface);
+  }
+  .summary-photo img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    filter:saturate(0.92) contrast(1.03);
+  }
+  .summary-photo::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(14,25,23,0.88) 0%, rgba(14,25,23,0.05) 45%);
+  }
+  .summary-photo-cap{
+    position:absolute; left:16px; bottom:14px; right:16px;
+    z-index:2;
+  }
+  .summary-photo-cap .name{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.02rem;
+  }
+  .summary-photo-cap .role{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--signal);
+    letter-spacing:0.04em;
+  }
+
+  .fact-list{ display:flex; flex-direction:column; gap:18px; }
+  .fact{
+    display:flex;
+    gap:14px;
+    padding:16px 18px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    transition:border-color 0.25s ease, transform 0.25s ease;
+  }
+  .fact:hover{ border-color:var(--signal); transform:translateX(4px); }
+  .fact-k{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--amber);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    min-width:92px;
+  }
+  .fact-v{ font-size:0.94rem; color:var(--text); }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    padding-left:36px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:5px; top:6px;
+    width:1px;
+    background:var(--line);
+    height:100%;
+  }
+  .timeline-progress{
+    position:absolute;
+    left:5px; top:6px;
+    width:1px;
+    height:0%;
+    background:linear-gradient(var(--signal), var(--amber));
+    transition:height 0.15s linear;
+  }
+  .t-item{
+    position:relative;
+    padding-bottom:56px;
+  }
+  .t-item:last-child{ padding-bottom:0; }
+  .t-dot{
+    position:absolute;
+    left:-36px; top:4px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--bg-alt);
+    border:1.6px solid var(--muted-dim);
+    transition:border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+  }
+  .t-item.in-view .t-dot{
+    border-color:var(--signal);
+    background:var(--signal);
+    box-shadow:0 0 0 4px rgba(111,207,151,0.15);
+  }
+  .t-period{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    color:var(--amber);
+    letter-spacing:0.03em;
+    margin-bottom:6px;
+    display:block;
+  }
+  .t-role{
+    font-family:var(--font-display);
+    font-size:1.2rem;
+    font-weight:600;
+    margin-bottom:4px;
+  }
+  .t-org{ color:var(--muted); font-size:0.92rem; margin-bottom:14px; }
+  .t-list{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .t-list li{
+    position:relative;
+    padding-left:18px;
+    color:var(--muted);
+    font-size:0.94rem;
+  }
+  .t-list li::before{
+    content:'';
+    position:absolute; left:0; top:0.6em;
+    width:6px; height:1px;
+    background:var(--muted-dim);
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:20px;
+  }
+  .skill-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px;
+    transition:transform 0.25s ease, border-color 0.25s ease;
+  }
+  .skill-card:hover{ transform:translateY(-4px); border-color:var(--amber); }
+  .skill-card-title{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    color:var(--signal);
+    margin-bottom:14px;
+  }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-size:0.82rem;
+    padding:6px 12px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--text);
+    background:var(--bg-alt);
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .skill-card:hover .tag{ border-color:rgba(232,163,61,0.35); }
+
+  /* ---------- ACHIEVEMENTS ---------- */
+  .ach-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:20px;
+  }
+  .ach-card{
+    padding:26px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:linear-gradient(160deg, var(--surface), var(--bg-alt));
+    position:relative;
+    overflow:hidden;
+  }
+  .ach-card::after{
+    content:'';
+    position:absolute;
+    top:-40%; right:-20%;
+    width:140px; height:140px;
+    background:radial-gradient(circle, rgba(232,163,61,0.18), transparent 70%);
+  }
+  .ach-year{
+    font-family:var(--font-mono);
+    font-size:0.75rem;
+    color:var(--amber);
+  }
+  .ach-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.05rem;
+    margin:8px 0 6px;
+  }
+  .ach-desc{ color:var(--muted); font-size:0.9rem; }
+
+  /* ---------- SERTIFIKAT ---------- */
+  .cert-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:22px;
+  }
+  .cert-card{
+    display:block;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+    transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  a.cert-card{ cursor:pointer; }
+  .cert-card:hover{
+    transform:translateY(-5px);
+    border-color:var(--amber);
+    box-shadow:0 16px 34px -18px rgba(0,0,0,0.55);
+  }
+  .cert-thumb{
+    position:relative;
+    aspect-ratio:4/3;
+    overflow:hidden;
+    background:#f2efe9;
+  }
+  .cert-thumb img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.4s ease;
+  }
+  .cert-card:hover .cert-thumb img{ transform:scale(1.05); }
+  .cert-thumb-badge{
+    position:absolute;
+    right:10px; top:10px;
+    font-family:var(--font-mono);
+    font-size:0.66rem;
+    letter-spacing:0.04em;
+    padding:5px 9px;
+    border-radius:20px;
+    background:rgba(14,25,23,0.72);
+    color:var(--signal);
+    border:1px solid rgba(111,207,151,0.3);
+  }
+  .cert-noimg{
+    aspect-ratio:4/3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(150deg, var(--surface-alt), var(--bg-alt));
+  }
+  .cert-noimg .seal{
+    width:52px; height:52px;
+    border-radius:50%;
+    border:1.5px solid var(--amber-dim);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--amber);
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:0.95rem;
+  }
+  .cert-body{ padding:16px 18px 18px; }
+  .cert-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:0.98rem;
+    margin-bottom:6px;
+    line-height:1.3;
+  }
+  .cert-meta{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--muted);
+    letter-spacing:0.02em;
+  }
+  .cert-link-hint{
+    margin-top:10px;
+    font-size:0.76rem;
+    color:var(--signal);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  /* ---------- ORG ---------- */
+  .org-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:18px;
+  }
+  .org-card{
+    padding:20px;
+    border-left:2px solid var(--line);
+    transition:border-color 0.3s ease;
+  }
+  .org-card:hover{ border-color:var(--signal); }
+  .org-period{ font-family:var(--font-mono); font-size:0.74rem; color:var(--muted-dim); }
+  .org-name{ font-weight:600; margin:6px 0 6px; font-family:var(--font-display); }
+  .org-desc{ color:var(--muted); font-size:0.88rem; }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-card{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    padding:32px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+  }
+  .edu-main .org-name{ font-size:1.15rem; }
+  .edu-stats{ display:flex; gap:32px; }
+  .stat-num{
+    font-family:var(--font-display);
+    font-size:1.8rem;
+    font-weight:700;
+    color:var(--signal);
+  }
+  .stat-label{ font-size:0.75rem; color:var(--muted); font-family:var(--font-mono); }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:90px 0 50px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  footer .section-title{ margin-bottom:16px; }
+  footer p{ color:var(--muted); max-width:46ch; margin:0 auto 32px; }
+  .footer-links{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:56px;
+  }
+  .foot-bottom{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--muted-dim);
+  }
+
+  ::-webkit-scrollbar{ width:9px; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+  ::-webkit-scrollbar-thumb{ background:var(--surface-alt); border-radius:8px; }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="nav-mark"><span class="dot"></span> ALVIANUS NESTHA</div>
+    <div class="nav-links">
+      <a href="#tentang">Tentang</a>
+      <a href="#pengalaman">Pengalaman</a>
+      <a href="#keahlian">Keahlian</a>
+      <a href="#pencapaian">Pencapaian</a>
+      <a href="#sertifikat">Sertifikat</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow">Portofolio &amp; CV Digital</div>
+      <h1 class="title">Menghubungkan sensor, sistem,<br> dan <span class="accent">warga</span>.</h1>
+      <p class="hero-desc">Alvianus Nestha — lulusan Informatika Universitas Mulawarman yang bergerak di antara Internet of Things, pengembangan website, dan digitalisasi layanan komunitas di Kalimantan Timur.</p>
+      <div class="hero-actions">
+        <a href="mailto:alvianusn@gmail.com" class="btn btn-primary">Hubungi Saya</a>
+        <a href="assets/cv-alvianus-nestha.pdf" class="btn btn-ghost" download>Unduh CV (PDF)</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 460 440" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <defs>
+          <clipPath id="avatarClip">
+            <circle cx="230" cy="220" r="34"></circle>
+          </clipPath>
+        </defs>
+        <!-- lines from center to 4 nodes -->
+        <path class="net-line" d="M230,220 L90,90"></path>
+        <path class="net-line-flow" d="M230,220 L90,90"></path>
+        <path class="net-line" d="M230,220 L370,90"></path>
+        <path class="net-line-flow amber" d="M230,220 L370,90"></path>
+        <path class="net-line" d="M230,220 L80,340"></path>
+        <path class="net-line-flow amber" d="M230,220 L80,340"></path>
+        <path class="net-line" d="M230,220 L380,350"></path>
+        <path class="net-line-flow" d="M230,220 L380,350"></path>
+
+        <!-- center: profile photo as the connecting node -->
+        <g style="color:var(--signal)">
+          <circle class="net-node-ring" cx="230" cy="220" r="34"></circle>
+        </g>
+        <image href="assets/anzi.png" xlink:href="assets/anzi.jpeg" x="196" y="186" width="68" height="68"
+               clip-path="url(#avatarClip)" preserveAspectRatio="xMidYMid slice"></image>
+        <circle cx="230" cy="220" r="34" fill="none" stroke="var(--signal)" stroke-width="1.8"></circle>
+
+        <!-- node: IoT -->
+        <g style="color:var(--amber)">
+          <circle class="net-node-ring" cx="90" cy="90" r="17"></circle>
+          <circle class="net-node" cx="90" cy="90" r="17"></circle>
+        </g>
+        <text class="net-label" x="90" y="60" text-anchor="middle">IoT &amp; Sensor</text>
+
+        <!-- node: Web -->
+        <g style="color:var(--signal)">
+          <circle class="net-node-ring" cx="370" cy="90" r="17"></circle>
+          <circle class="net-node" cx="370" cy="90" r="17"></circle>
+        </g>
+        <text class="net-label" x="370" y="60" text-anchor="middle">Web Developer</text>
+
+        <!-- node: Desain -->
+        <g style="color:var(--amber)">
+          <circle class="net-node-ring" cx="80" cy="340" r="17"></circle>
+          <circle class="net-node" cx="80" cy="340" r="17"></circle>
+        </g>
+        <text class="net-label" x="80" y="378" text-anchor="middle">Desain Grafis</text>
+
+        <!-- node: Komunitas -->
+        <g style="color:var(--signal)">
+          <circle class="net-node-ring" cx="380" cy="350" r="17"></circle>
+          <circle class="net-node" cx="380" cy="350" r="17"></circle>
+        </g>
+        <text class="net-label" x="380" y="388" text-anchor="middle">Adat &amp; Komunitas</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- TENTANG -->
+  <section class="section" id="tentang">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Tentang Saya</h2>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-text reveal">
+          <p>Saya adalah lulusan <strong>Informatika Universitas Mulawarman</strong> dengan keahlian di bidang IT, terutama <strong>Internet of Things</strong> dan <strong>pengembangan website</strong>. Saya senang terlibat dalam proyek praktis dan terus belajar untuk mengasah keterampilan.</p>
+          <p>Aktif, disiplin, dan konsisten — saya juga menjaga keseimbangan hidup dengan rutinitas gym, membaca, dan belajar mandiri.</p>
+        </div>
+        <div class="summary-photo reveal">
+          <img src="assets/ness.jpeg" alt="Foto Alvianus Nestha">
+          <div class="summary-photo-cap">
+            <div class="name">Alvianus Nestha</div>
+            <div class="role">Website Developer &amp; IOT</div>
+          </div>
+        </div>
+        <div class="fact-list reveal">
+          <div class="fact"><span class="fact-k">Lokasi</span><span class="fact-v">Kutai Barat, Kalimantan Timur</span></div>
+          <div class="fact"><span class="fact-k">Email</span><span class="fact-v">alvianusn@gmail.com</span></div>
+          <div class="fact"><span class="fact-k">Telepon</span><span class="fact-v">+62 852-5079-7533</span></div>
+          <div class="fact"><span class="fact-k">LinkedIn</span><span class="fact-v">alvianus-nestha</span></div>
+          <div class="fact"><span class="fact-k">GitHub</span><span class="fact-v">@alvianzi</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENGALAMAN -->
+  <section class="section" id="pengalaman">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Pengalaman Kerja</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-progress" id="timelineProgress"></div>
+
+        <div class="t-item reveal">
+          <div class="t-dot"></div>
+          <span class="t-period">Okt 2022 — Mei 2023</span>
+          <div class="t-role">Magang — Pengembang Perangkat IoT</div>
+          <div class="t-org">PT Habibie Garden</div>
+          <ul class="t-list">
+            <li>Mengembangkan perangkat IoT berbasis Arduino untuk proyek peternakan ayam cerdas (smart farm).</li>
+            <li>Membangun sistem otomatisasi monitoring sensor kelembapan, suhu, dan amonia.</li>
+            <li>Berkolaborasi dengan tim merancang solusi teknis dan menguji perangkat agar berjalan sesuai spesifikasi.</li>
+          </ul>
+        </div>
+
+        <div class="t-item reveal">
+          <div class="t-dot"></div>
+          <span class="t-period">Sep 2024 — Jan 2025</span>
+          <div class="t-role">Pengembang Website</div>
+          <div class="t-org">Kampung Juaq Asa</div>
+          <ul class="t-list">
+            <li>Mengelola dan memelihara situs web desa, termasuk memperbarui konten dan informasi kegiatan.</li>
+            <li>Bertanggung jawab atas optimisasi mesin pencari (SEO) dan visibilitas situs di berbagai platform.</li>
+            <li>Membantu pengembangan sistem backend sederhana untuk interaksi warga dengan administrasi desa secara digital.</li>
+          </ul>
+        </div>
+
+        <div class="t-item reveal">
+          <div class="t-dot"></div>
+          <span class="t-period">Mar 2025 — Mei 2025</span>
+          <div class="t-role">Desain Grafis</div>
+          <div class="t-org">Editor Konten Media Sosial (Klien)</div>
+          <ul class="t-list">
+            <li>Merencanakan dan membuat konten harian untuk akun media sosial klien.</li>
+            <li>Mengelola tugas administratif termasuk penginputan data dan dokumentasi.</li>
+            <li>Melakukan monitoring dan evaluasi terhadap konten yang telah dipublikasikan.</li>
+          </ul>
+        </div>
+
+        <div class="t-item reveal">
+          <div class="t-dot"></div>
+          <span class="t-period">Jul 2025 — Sekarang</span>
+          <div class="t-role">Sekretaris Adat</div>
+          <div class="t-org">Kampung Juaq Asa</div>
+          <ul class="t-list">
+            <li>Mengonversi dokumen fisik (surat keputusan, notulensi, peraturan adat) ke format digital.</li>
+            <li>Menyusun dan mengelola arsip melalui sistem komputer agar lebih aman dan terstruktur.</li>
+            <li>Menyiapkan laporan kegiatan adat dalam bentuk dokumen elektronik dan presentasi.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KEAHLIAN -->
+  <section class="section" id="keahlian">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Keahlian</h2>
+      </div>
+      <div class="skill-groups">
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Pengembangan Web</div>
+          <div class="tag-row">
+            <span class="tag">PHP</span><span class="tag">Laravel</span><span class="tag">HTML</span><span class="tag">CSS</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Internet of Things</div>
+          <div class="tag-row"><span class="tag">Python</span><span class="tag">Arduino</span><span class="tag">Sensor Monitoring</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Desain Grafis</div>
+          <div class="tag-row">
+            <span class="tag">Photoshop</span><span class="tag">Premiere</span><span class="tag">Canva</span><span class="tag">CapCut</span><span class="tag">Filmora</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Perangkat &amp; Kolaborasi</div>
+          <div class="tag-row"><span class="tag">Microsoft Word</span><span class="tag">Excel</span><span class="tag">PowerPoint</span></div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-title">Manajemen &amp; Komunikasi</div>
+          <div class="tag-row"><span class="tag">Manajemen Media Sosial</span><span class="tag">Presentasi</span><span class="tag">Komunikasi</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENCAPAIAN -->
+  <section class="section" id="pencapaian">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Pencapaian &amp; Sertifikasi</h2>
+      </div>
+      <div class="ach-grid">
+        <div class="ach-card reveal">
+          <span class="ach-year">Juli 2020</span>
+          <div class="ach-title">Juara 2 — Karya Tulis Ilmiah</div>
+          <div class="ach-desc">Lomba Karya Tulis Ilmiah Tingkat Nasional "Pesut Polnes" Jilid III.</div>
+        </div>
+        <div class="ach-card reveal">
+          <span class="ach-year">Jul — Sep 2021</span>
+          <div class="ach-title">Java Foundation &amp; Programming</div>
+          <div class="ach-desc">Program Fresh Graduate Academy, Digital Talent Scholarship — 180 jam pelatihan.</div>
+        </div>
+        <div class="ach-card reveal">
+          <span class="ach-year">Agu — Okt 2025</span>
+          <div class="ach-title">Intermediate Junior Web Developer</div>
+          <div class="ach-desc">Program pelatihan Digital Talent Scholarship untuk Junior Web Developer.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERTIFIKAT -->
+  <section class="section" id="sertifikat">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Galeri Sertifikat</h2>
+      </div>
+      <p class="section-sub reveal">Dokumen asli dari setiap pelatihan dan penghargaan — klik untuk membuka berkas PDF lengkap.</p>
+      <div class="cert-grid">
+
+        <a class="cert-card reveal" href="assets/Sertif Juara 2.pdf" target="_blank" rel="noopener">
+          <div class="cert-thumb">
+            <img src="assets/anzi.png" alt="Sertifikat Juara 2 Karya Tulis Ilmiah Nasional">
+            <span class="cert-thumb-badge">PDF</span>
+          </div>
+          <div class="cert-body">
+            <div class="cert-title">Juara 2 — Karya Tulis Ilmiah Nasional</div>
+            <div class="cert-meta">PESUT POLNES JILID III · Juli 2020</div>
+            <div class="cert-link-hint">Lihat sertifikat asli →</div>
+          </div>
+        </a>
+
+        <a class="cert-card reveal" href="assets/Sertifikat Digitalisasi kandang ayam broiler.pdf" target="_blank" rel="noopener">
+          <div class="cert-thumb">
+            <img src="assets/anzi.png" alt="Sertifikat Pelatihan Mahasiswa MBKM Digitalisasi Kandang Ayam Pintar">
+            <span class="cert-thumb-badge">PDF</span>
+          </div>
+          <div class="cert-body">
+            <div class="cert-title">Pelatihan Mahasiswa MBKM — Digitalisasi Kandang Ayam Pintar (IoT)</div>
+            <div class="cert-meta">Kedaireka · Universitas Mulawarman · Okt 2022</div>
+            <div class="cert-link-hint">Lihat sertifikat asli →</div>
+          </div>
+        </a>
+
+        <a class="cert-card reveal" href="assets/Sertifikat Magang Habibie garden.pdf" target="_blank" rel="noopener">
+          <div class="cert-thumb">
+            <img src="assets/anzi.png" alt="Sertifikat Pelatihan Digitalisasi Kandang Ayam Pintar Berbasis IoT">
+            <span class="cert-thumb-badge">PDF</span>
+          </div>
+          <div class="cert-body">
+            <div class="cert-title">Pelatihan Digitalisasi Kandang Ayam Pintar Berbasis IoT</div>
+            <div class="cert-meta">Kedaireka · Universitas Mulawarman · Okt 2022</div>
+            <div class="cert-link-hint">Lihat sertifikat asli →</div>
+          </div>
+        </a>
+
+        <a class="cert-card reveal" href="assets/Sertifikat_ALVIANUS NESTHA_Konsep Pemrograman.pdf" target="_blank" rel="noopener">
+          <div class="cert-thumb">
+            <img src="assets/anzi.png" alt="Sertifikat Konsep Pemrograman Digital Talent Scholarship">
+            <span class="cert-thumb-badge">PDF</span>
+          </div>
+          <div class="cert-body">
+            <div class="cert-title">Konsep Pemrograman — Micro Skill</div>
+            <div class="cert-meta">Digital Talent Scholarship · Juli 2025</div>
+            <div class="cert-link-hint">Lihat sertifikat asli →</div>
+          </div>
+        </a>
+
+        <a class="cert-card reveal" href="assets/Sertifikat_ALVIANUS NESTHA_Fundamental Junior Web Developer.pdf" target="_blank" rel="noopener">
+          <div class="cert-thumb">
+            <img src="assets/anzi.png" alt="Sertifikat Fundamental Junior Web Developer Digital Talent Scholarship">
+            <span class="cert-thumb-badge">PDF</span>
+          </div>
+          <div class="cert-body">
+            <div class="cert-title">Fundamental Junior Web Developer</div>
+            <div class="cert-meta">Digital Talent Scholarship · Agustus 2025</div>
+            <div class="cert-link-hint">Lihat sertifikat asli →</div>
+          </div>
+        </a>
+ <a class="cert-card reveal" href="assets/sertifikat-intermediate-web-developer.pdf" target="_blank" rel="noopener">
+          <div class="cert-thumb">
+            <img src="assets/anzi.png" alt="Sertifikat Intermediate Junior Web Developer Digital Talent Scholarship">
+            <span class="cert-thumb-badge">PDF</span>
+          </div>
+          <div class="cert-body">
+            <div class="cert-title">Intermediate Junior Web Developer</div>
+            <div class="cert-meta">Digital Talent Scholarship · September 2025</div>
+            <div class="cert-link-hint">Lihat sertifikat asli →</div>
+          </div>
+        </a>
+  </section>
+
+  <!-- ORGANISASI -->
+  <section class="section" id="organisasi">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">06</span>
+        <h2 class="section-title">Aktivitas Organisasi</h2>
+      </div>
+      <div class="org-grid">
+        <div class="org-card reveal">
+          <span class="org-period">2020 — 2021</span>
+          <div class="org-name">DPM FKTIF — Divisi Multimedia</div>
+          <div class="org-desc">Membuat konten visual dan digital untuk acara fakultas serta mengelola publikasi kegiatan kampus.</div>
+        </div>
+        <div class="org-card reveal">
+          <span class="org-period">2021 — 2022</span>
+          <div class="org-name">Keluarga Mahasiswa Katolik (KMK)</div>
+          <div class="org-desc">Anggota tim multimedia; mengelola desain, video, dan koordinasi acara sosial komunitas.</div>
+        </div>
+        <div class="org-card reveal">
+          <span class="org-period">2023 — Sekarang</span>
+          <div class="org-name">Sekretaris Karang Taruna Kampung Juaq Asa</div>
+          <div class="org-desc">Menyusun agenda rapat, mengelola arsip organisasi, dan mengorganisir program pemberdayaan pemuda.</div>
+        </div>
+        <div class="org-card reveal">
+          <span class="org-period">2024 — 2025</span>
+          <div class="org-name">Agen Statistik Kampung Juaq Asa</div>
+          <div class="org-desc">Mengumpulkan data statistik desa bersama BPS dan menjembatani masyarakat dengan pemerintah.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENDIDIKAN -->
+  <section class="section" id="pendidikan">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">07</span>
+        <h2 class="section-title">Pendidikan</h2>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-main">
+          <span class="org-period">Agustus 2019 — Februari 2024</span>
+          <div class="org-name">Universitas Mulawarman, Samarinda</div>
+          <div class="org-desc">Fakultas Teknik, Jurusan Informatika — Lulus dengan predikat "Dengan Pujian".</div>
+        </div>
+        <div class="edu-stats">
+          <div>
+            <div class="stat-num">3.67</div>
+            <div class="stat-label">IPK / 4.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="kontak">
+  <div class="wrap">
+    <h2 class="section-title reveal">Mari Berkolaborasi</h2>
+    <p class="reveal">Terbuka untuk peluang di bidang pengembangan web, IoT, maupun pengelolaan sistem digital. Hubungi saya melalui salah satu kanal berikut.</p>
+    <div class="footer-links reveal">
+      <a href="mailto:alvianusn@gmail.com" class="btn btn-primary">alvianusn@gmail.com</a>
+      <a href="https://www.linkedin.com/in/alvianus-nestha-3a0a50221/" class="btn btn-ghost" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/alvianzi/" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="foot-bottom">ALVIANUS NESTHA — KUTAI BARAT, KALIMANTAN TIMUR</div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const timelineItems = document.querySelectorAll('.t-item');
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  const timelineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  timelineItems.forEach(el => timelineObserver.observe(el));
+
+  // timeline progress line tied to scroll
+  const progressEl = document.getElementById('timelineProgress');
+  const timelineWrap = document.querySelector('.timeline');
+
+  function updateTimelineProgress(){
+    if (!timelineWrap || !progressEl) return;
+    const rect = timelineWrap.getBoundingClientRect();
+    const viewportH = window.innerHeight;
+    const total = rect.height;
+    let progressed = viewportH * 0.75 - rect.top;
+    progressed = Math.max(0, Math.min(progressed, total));
+    const pct = total > 0 ? (progressed / total) * 100 : 0;
+    progressEl.style.height = pct + '%';
+  }
+
+  window.addEventListener('scroll', updateTimelineProgress, { passive:true });
+  window.addEventListener('resize', updateTimelineProgress);
+  updateTimelineProgress();
+</script>
+
+</body>
+</html>
