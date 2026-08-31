@@ -7,7 +7,7 @@
 <meta name="description" content="Portofolio Alvianus Nestha, lulusan Informatika Universitas Mulawarman dengan keahlian IoT dan pengembangan website.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="assets/favicon_io/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
@@ -74,6 +74,30 @@
     padding:0 32px;
   }
 
+  /* ---------- GLOBAL CHROME: cursor glow + top progress ---------- */
+  .cursor-glow{
+    position:fixed;
+    top:0; left:0;
+    width:520px; height:520px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(111,207,151,0.07), rgba(232,163,61,0.03) 45%, transparent 70%);
+    pointer-events:none;
+    transform:translate(-9999px,-9999px);
+    z-index:0;
+    opacity:0;
+    transition:opacity 0.4s ease;
+  }
+  .cursor-glow.active{ opacity:1; }
+
+  .progress-bar{
+    position:fixed;
+    top:0; left:0;
+    height:3px;
+    width:0%;
+    background:linear-gradient(90deg, var(--signal), var(--amber));
+    z-index:101;
+  }
+
   /* ---------- NAV ---------- */
   .nav{
     position:fixed;
@@ -97,7 +121,9 @@
     display:flex;
     align-items:center;
     gap:8px;
+    transition:opacity 0.2s ease;
   }
+  .nav-mark:hover{ opacity:0.8; }
   .nav-mark .dot{
     width:7px; height:7px; border-radius:50%;
     background:var(--signal);
@@ -125,7 +151,54 @@
     transition:width 0.25s ease;
   }
   .nav-links a:hover::after{ width:100%; }
+  .nav-links a.active{ color:var(--text); }
+  .nav-links a.active::after{ width:100%; background:var(--signal); }
   @media (max-width:720px){ .nav-links{ display:none; } }
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:34px; height:34px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+  }
+  .nav-toggle span{
+    display:block;
+    width:100%;
+    height:1.6px;
+    background:var(--text);
+    border-radius:2px;
+    transition:transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(6.6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-6.6px) rotate(-45deg); }
+  @media (max-width:720px){ .nav-toggle{ display:flex; } }
+
+  .mobile-nav{
+    max-height:0;
+    overflow:hidden;
+    background:var(--bg-alt);
+    border-top:1px solid transparent;
+    transition:max-height 0.35s ease, border-color 0.35s ease;
+  }
+  .mobile-nav.open{
+    max-height:420px;
+    border-top:1px solid var(--line);
+  }
+  .mobile-nav a{
+    display:block;
+    padding:14px 32px;
+    color:var(--muted);
+    font-size:0.95rem;
+    border-bottom:1px solid var(--line);
+    transition:color 0.2s ease, padding-left 0.2s ease, background 0.2s ease;
+  }
+  .mobile-nav a:hover, .mobile-nav a:focus-visible{ color:var(--signal); padding-left:38px; background:rgba(111,207,151,0.04); }
 
   /* ---------- HERO ---------- */
   .hero{
@@ -136,7 +209,22 @@
     padding-top:64px;
     overflow:hidden;
   }
+  .hero-orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:0.35;
+    pointer-events:none;
+    z-index:0;
+  }
+  .hero-orb.o1{ width:260px; height:260px; background:var(--signal); top:8%; left:2%; animation:drift1 18s ease-in-out infinite alternate; }
+  .hero-orb.o2{ width:220px; height:220px; background:var(--amber); bottom:4%; right:6%; animation:drift2 22s ease-in-out infinite alternate; }
+  @keyframes drift1{ from{ transform:translate(0,0); } to{ transform:translate(30px,40px); } }
+  @keyframes drift2{ from{ transform:translate(0,0); } to{ transform:translate(-24px,-30px); } }
+
   .hero .wrap{
+    position:relative;
+    z-index:1;
     display:grid;
     grid-template-columns:1.1fr 0.9fr;
     gap:40px;
@@ -179,17 +267,43 @@
     animation:rise 0.75s ease forwards;
     animation-delay:0.22s;
   }
-  h1.title .accent{ color:var(--signal); }
+  h1.title .accent{
+    color:var(--signal);
+    display:inline-block;
+    animation:accent-glow 3s ease-in-out 1.4s infinite;
+  }
+  @keyframes accent-glow{
+    0%,100%{ text-shadow:0 0 0 rgba(111,207,151,0); }
+    50%{ text-shadow:0 0 18px rgba(111,207,151,0.4); }
+  }
 
   .hero-desc{
     font-size:1.05rem;
     color:var(--muted);
     max-width:46ch;
-    margin-bottom:32px;
+    margin-bottom:26px;
     opacity:0;
     animation:rise 0.75s ease forwards;
     animation-delay:0.34s;
   }
+
+  .role-cycle{
+    font-family:var(--font-mono);
+    font-size:0.92rem;
+    color:var(--signal);
+    margin-bottom:30px;
+    min-height:1.4em;
+    opacity:0;
+    animation:rise 0.75s ease forwards;
+    animation-delay:0.42s;
+  }
+  .role-cycle-prompt{ color:var(--amber); margin-right:8px; }
+  .role-cycle-cursor{
+    display:inline-block;
+    margin-left:2px;
+    animation:blink 1s step-end infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
 
   .hero-actions{
     display:flex;
@@ -197,13 +311,14 @@
     flex-wrap:wrap;
     opacity:0;
     animation:rise 0.75s ease forwards;
-    animation-delay:0.46s;
+    animation-delay:0.54s;
   }
 
   @keyframes rise{
     from{ opacity:0; transform:translateY(16px); }
     to{ opacity:1; transform:translateY(0); }
   }
+  @keyframes svgIn{ from{ opacity:0; } to{ opacity:1; } }
 
   .btn{
     display:inline-flex;
@@ -289,6 +404,7 @@
     position:relative;
     padding:110px 0;
     border-top:1px solid var(--line);
+    scroll-margin-top:76px;
   }
   .section-head{
     display:flex;
@@ -319,6 +435,7 @@
     opacity:0;
     transform:translateY(28px);
     transition:opacity 0.7s ease, transform 0.7s ease;
+    transition-delay:var(--d, 0s);
   }
   .js .reveal.in-view{ opacity:1; transform:translateY(0); }
 
@@ -340,7 +457,9 @@
     border:1px solid var(--line);
     aspect-ratio:4/5;
     background:var(--surface);
+    transition:transform 0.15s ease, box-shadow 0.3s ease;
   }
+  .summary-photo:hover{ box-shadow:0 22px 44px -22px rgba(0,0,0,0.6); }
   .summary-photo img{
     width:100%; height:100%;
     object-fit:cover;
@@ -424,6 +543,18 @@
     border:1.6px solid var(--muted-dim);
     transition:border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
   }
+  .t-dot::after{
+    content:'';
+    position:absolute;
+    inset:-6px;
+    border-radius:50%;
+    border:1px solid var(--signal);
+    opacity:0;
+  }
+  .t-item.current .t-dot::after{
+    opacity:0.5;
+    animation:ring-pulse 2.2s ease-out infinite;
+  }
   .t-item.in-view .t-dot{
     border-color:var(--signal);
     background:var(--signal);
@@ -488,9 +619,16 @@
     border:1px solid var(--line);
     color:var(--text);
     background:var(--bg-alt);
-    transition:border-color 0.2s ease, color 0.2s ease;
+    display:inline-block;
+    transition:border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, background 0.2s ease;
   }
   .skill-card:hover .tag{ border-color:rgba(232,163,61,0.35); }
+  .tag:hover{
+    transform:translateY(-2px) scale(1.05);
+    border-color:var(--signal);
+    background:rgba(111,207,151,0.08);
+    color:var(--signal);
+  }
 
   /* ---------- ACHIEVEMENTS ---------- */
   .ach-grid{
@@ -505,6 +643,12 @@
     background:linear-gradient(160deg, var(--surface), var(--bg-alt));
     position:relative;
     overflow:hidden;
+    transition:transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .ach-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(232,163,61,0.4);
+    box-shadow:0 16px 32px -20px rgba(0,0,0,0.55);
   }
   .ach-card::after{
     content:'';
@@ -512,7 +656,9 @@
     top:-40%; right:-20%;
     width:140px; height:140px;
     background:radial-gradient(circle, rgba(232,163,61,0.18), transparent 70%);
+    transition:transform 0.5s ease;
   }
+  .ach-card:hover::after{ transform:scale(1.3); }
   .ach-year{
     font-family:var(--font-mono);
     font-size:0.75rem;
@@ -538,11 +684,10 @@
     border-radius:10px;
     overflow:hidden;
     background:var(--surface);
-    transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    transition:border-color 0.25s ease, box-shadow 0.25s ease;
   }
   a.cert-card{ cursor:pointer; }
   .cert-card:hover{
-    transform:translateY(-5px);
     border-color:var(--amber);
     box-shadow:0 16px 34px -18px rgba(0,0,0,0.55);
   }
@@ -570,23 +715,45 @@
     background:rgba(14,25,23,0.72);
     color:var(--signal);
     border:1px solid rgba(111,207,151,0.3);
+    z-index:1;
   }
   .cert-noimg{
+    position:relative;
     aspect-ratio:4/3;
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
+    gap:10px;
     background:linear-gradient(150deg, var(--surface-alt), var(--bg-alt));
+    overflow:hidden;
+  }
+  .cert-noimg-pattern{
+    position:absolute; inset:0;
+    background-image:repeating-linear-gradient(45deg, rgba(242,239,233,0.035) 0 1px, transparent 1px 13px);
+    opacity:0.6;
   }
   .cert-noimg .seal{
-    width:52px; height:52px;
+    position:relative;
+    width:54px; height:54px;
     border-radius:50%;
-    border:1.5px solid var(--amber-dim);
+    border:1.5px solid var(--accent, var(--amber-dim));
     display:flex; align-items:center; justify-content:center;
-    color:var(--amber);
-    font-family:var(--font-display);
-    font-weight:700;
-    font-size:0.95rem;
+    color:var(--accent, var(--amber));
+    background:rgba(14,25,23,0.4);
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .cert-card:hover .seal{
+    transform:scale(1.08);
+    box-shadow:0 0 0 6px rgba(111,207,151,0.08);
+  }
+  .cert-noimg-tag{
+    position:relative;
+    font-family:var(--font-mono);
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    text-transform:uppercase;
   }
   .cert-body{ padding:16px 18px 18px; }
   .cert-title{
@@ -609,7 +776,9 @@
     display:flex;
     align-items:center;
     gap:6px;
+    transition:gap 0.2s ease;
   }
+  .cert-card:hover .cert-link-hint{ gap:10px; }
 
   /* ---------- ORG ---------- */
   .org-grid{
@@ -620,9 +789,13 @@
   .org-card{
     padding:20px;
     border-left:2px solid var(--line);
-    transition:border-color 0.3s ease;
+    transition:border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
   }
-  .org-card:hover{ border-color:var(--signal); }
+  .org-card:hover{
+    border-color:var(--signal);
+    background:rgba(111,207,151,0.04);
+    transform:translateX(6px);
+  }
   .org-period{ font-family:var(--font-mono); font-size:0.74rem; color:var(--muted-dim); }
   .org-name{ font-weight:600; margin:6px 0 6px; font-family:var(--font-display); }
   .org-desc{ color:var(--muted); font-size:0.88rem; }
@@ -637,7 +810,9 @@
     background:var(--surface);
     border:1px solid var(--line);
     border-radius:12px;
+    transition:border-color 0.3s ease, box-shadow 0.3s ease;
   }
+  .edu-card:hover{ border-color:var(--signal); box-shadow:0 18px 40px -24px rgba(0,0,0,0.6); }
   .edu-main .org-name{ font-size:1.15rem; }
   .edu-stats{ display:flex; gap:32px; }
   .stat-num{
@@ -645,6 +820,7 @@
     font-size:1.8rem;
     font-weight:700;
     color:var(--signal);
+    font-variant-numeric:tabular-nums;
   }
   .stat-label{ font-size:0.75rem; color:var(--muted); font-family:var(--font-mono); }
 
@@ -653,6 +829,7 @@
     padding:90px 0 50px;
     border-top:1px solid var(--line);
     text-align:center;
+    scroll-margin-top:76px;
   }
   footer .section-title{ margin-bottom:16px; }
   footer p{ color:var(--muted); max-width:46ch; margin:0 auto 32px; }
@@ -669,6 +846,31 @@
     color:var(--muted-dim);
   }
 
+  /* ---------- BACK TO TOP ---------- */
+  .back-to-top{
+    position:fixed;
+    right:24px; bottom:24px;
+    width:46px; height:46px;
+    border-radius:50%;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--signal);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(12px);
+    pointer-events:none;
+    transition:opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    z-index:90;
+  }
+  .back-to-top.show{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .back-to-top:hover{ border-color:var(--signal); background:var(--surface-alt); }
+  @media (max-width:720px){ .back-to-top{ right:16px; bottom:16px; width:42px; height:42px; } }
+
   ::-webkit-scrollbar{ width:9px; }
   ::-webkit-scrollbar-track{ background:var(--bg); }
   ::-webkit-scrollbar-thumb{ background:var(--surface-alt); border-radius:8px; }
@@ -677,9 +879,12 @@
 <body>
 <script>document.documentElement.classList.add('js');</script>
 
+<div class="cursor-glow" aria-hidden="true"></div>
+<div class="progress-bar" id="topProgress" aria-hidden="true"></div>
+
 <nav class="nav">
   <div class="wrap">
-    <div class="nav-mark"><span class="dot"></span> ALVIANUS NESTHA</div>
+    <a href="#" class="nav-mark" aria-label="Kembali ke beranda"><span class="dot"></span> ALVIANUS NESTHA</a>
     <div class="nav-links">
       <a href="#tentang">Tentang</a>
       <a href="#pengalaman">Pengalaman</a>
@@ -688,15 +893,31 @@
       <a href="#sertifikat">Sertifikat</a>
       <a href="#kontak">Kontak</a>
     </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#tentang">Tentang</a>
+    <a href="#pengalaman">Pengalaman</a>
+    <a href="#keahlian">Keahlian</a>
+    <a href="#pencapaian">Pencapaian</a>
+    <a href="#sertifikat">Sertifikat</a>
+    <a href="#kontak">Kontak</a>
   </div>
 </nav>
 
 <header class="hero">
+  <div class="hero-orb o1" aria-hidden="true"></div>
+  <div class="hero-orb o2" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-copy">
       <div class="eyebrow">Portofolio Online </div>
       <h1 class="title">Menghubungkan sensor, sistem,<br> dan <span class="accent">warga</span></h1>
       <p class="hero-desc">Alvianus Nestha lulusan Informatika Universitas Mulawarman yang bergerak di antara Internet of Things, pengembangan website, dan digitalisasi layanan komunitas di Kalimantan Timur.</p>
+      <div class="role-cycle" aria-hidden="true">
+        <span class="role-cycle-prompt">&gt;</span><span id="roleCycleText"></span><span class="role-cycle-cursor">|</span>
+      </div>
       <div class="hero-actions">
         <a href="mailto:alvianusn@gmail.com" class="btn btn-primary">Hubungi Saya</a>
         <a href="assets/cv-alvianus-nestha.pdf" class="btn btn-ghost" download>Unduh CV</a>
@@ -720,40 +941,42 @@
         <path class="net-line-flow" d="M230,220 L380,350"></path>
 
         <!-- center: profile photo as the connecting node -->
-        <g style="color:var(--signal)">
+        <g style="color:var(--signal); opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.5s;">
           <circle class="net-node-ring" cx="230" cy="220" r="34"></circle>
         </g>
-        <image href="assets/anzi.png" xlink:href="assets/anzi.jpeg" x="196" y="186" width="68" height="68"
-               clip-path="url(#avatarClip)" preserveAspectRatio="xMidYMid slice"></image>
-        <circle cx="230" cy="220" r="34" fill="none" stroke="var(--signal)" stroke-width="1.8"></circle>
+        <g style="opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.5s;">
+          <image href="assets/anzi.jpeg" xlink:href="assets/anzi.jpeg" x="196" y="186" width="68" height="68"
+                 clip-path="url(#avatarClip)" preserveAspectRatio="xMidYMid slice"></image>
+          <circle cx="230" cy="220" r="34" fill="none" stroke="var(--signal)" stroke-width="1.8"></circle>
+        </g>
 
         <!-- node: IoT -->
-        <g style="color:var(--amber)">
+        <g style="color:var(--amber); opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.65s;">
           <circle class="net-node-ring" cx="90" cy="90" r="17"></circle>
           <circle class="net-node" cx="90" cy="90" r="17"></circle>
         </g>
-        <text class="net-label" x="90" y="60" text-anchor="middle">IoT &amp; Sensor</text>
+        <text class="net-label" x="90" y="60" text-anchor="middle" style="opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.65s;">IoT &amp; Sensor</text>
 
         <!-- node: Web -->
-        <g style="color:var(--signal)">
+        <g style="color:var(--signal); opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.75s;">
           <circle class="net-node-ring" cx="370" cy="90" r="17"></circle>
           <circle class="net-node" cx="370" cy="90" r="17"></circle>
         </g>
-        <text class="net-label" x="370" y="60" text-anchor="middle">Web Developer</text>
+        <text class="net-label" x="370" y="60" text-anchor="middle" style="opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.75s;">Web Developer</text>
 
         <!-- node: Desain -->
-        <g style="color:var(--amber)">
+        <g style="color:var(--amber); opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.85s;">
           <circle class="net-node-ring" cx="80" cy="340" r="17"></circle>
           <circle class="net-node" cx="80" cy="340" r="17"></circle>
         </g>
-        <text class="net-label" x="80" y="378" text-anchor="middle">Desain Grafis</text>
+        <text class="net-label" x="80" y="378" text-anchor="middle" style="opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.85s;">Desain Grafis</text>
 
         <!-- node: Komunitas -->
-        <g style="color:var(--signal)">
+        <g style="color:var(--signal); opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.95s;">
           <circle class="net-node-ring" cx="380" cy="350" r="17"></circle>
           <circle class="net-node" cx="380" cy="350" r="17"></circle>
         </g>
-        <text class="net-label" x="380" y="388" text-anchor="middle">Adat &amp; Komunitas</text>
+        <text class="net-label" x="380" y="388" text-anchor="middle" style="opacity:0; animation:svgIn 0.6s ease forwards; animation-delay:0.95s;">Adat &amp; Komunitas</text>
       </svg>
     </div>
   </div>
@@ -836,7 +1059,7 @@
           </ul>
         </div>
 
-        <div class="t-item reveal">
+        <div class="t-item reveal current">
           <div class="t-dot"></div>
           <span class="t-period">Jul 2025 — Sekarang</span>
           <div class="t-role">Sekretaris Adat</div>
@@ -925,9 +1148,13 @@
       <p class="section-sub reveal">Dokumen asli dari setiap pelatihan dan penghargaan — klik untuk membuka berkas PDF lengkap.</p>
       <div class="cert-grid">
 
-        <a class="cert-card reveal" href="assets/Sertif Juara 2.pdf" target="_blank" rel="noopener">
-          <div class="cert-thumb">
-            <img src="assets/anzi.png" alt="Sertifikat Juara 2 Karya Tulis Ilmiah Nasional">
+        <a class="cert-card reveal" href="assets/Sertif%20Juara%202.pdf" target="_blank" rel="noopener">
+          <div class="cert-noimg" style="--accent:var(--amber)">
+            <div class="cert-noimg-pattern"></div>
+            <div class="seal">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"></circle><path d="M8 12.3l2.6 2.6L16 9"></path></svg>
+            </div>
+            <span class="cert-noimg-tag">Penghargaan</span>
             <span class="cert-thumb-badge">PDF</span>
           </div>
           <div class="cert-body">
@@ -937,9 +1164,13 @@
           </div>
         </a>
 
-        <a class="cert-card reveal" href="assets/Sertifikat Digitalisasi kandang ayam broiler.pdf" target="_blank" rel="noopener">
-          <div class="cert-thumb">
-            <img src="assets/anzi.png" alt="Sertifikat Pelatihan Mahasiswa MBKM Digitalisasi Kandang Ayam Pintar">
+        <a class="cert-card reveal" href="assets/Sertifikat%20Digitalisasi%20kandang%20ayam%20broiler.pdf" target="_blank" rel="noopener">
+          <div class="cert-noimg" style="--accent:var(--signal)">
+            <div class="cert-noimg-pattern"></div>
+            <div class="seal">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"></circle><path d="M8 12.3l2.6 2.6L16 9"></path></svg>
+            </div>
+            <span class="cert-noimg-tag">IoT · MBKM</span>
             <span class="cert-thumb-badge">PDF</span>
           </div>
           <div class="cert-body">
@@ -949,9 +1180,13 @@
           </div>
         </a>
 
-        <a class="cert-card reveal" href="assets/Sertifikat Magang Habibie garden.pdf" target="_blank" rel="noopener">
-          <div class="cert-thumb">
-            <img src="assets/anzi.png" alt="Sertifikat Pelatihan Digitalisasi Kandang Ayam Pintar Berbasis IoT">
+        <a class="cert-card reveal" href="assets/Sertifikat%20Magang%20Habibie%20garden.pdf" target="_blank" rel="noopener">
+          <div class="cert-noimg" style="--accent:var(--signal)">
+            <div class="cert-noimg-pattern"></div>
+            <div class="seal">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"></circle><path d="M8 12.3l2.6 2.6L16 9"></path></svg>
+            </div>
+            <span class="cert-noimg-tag">IoT · Magang</span>
             <span class="cert-thumb-badge">PDF</span>
           </div>
           <div class="cert-body">
@@ -961,9 +1196,13 @@
           </div>
         </a>
 
-        <a class="cert-card reveal" href="assets/Sertifikat_ALVIANUS NESTHA_Konsep Pemrograman.pdf" target="_blank" rel="noopener">
-          <div class="cert-thumb">
-            <img src="assets/anzi.png" alt="Sertifikat Konsep Pemrograman Digital Talent Scholarship">
+        <a class="cert-card reveal" href="assets/Sertifikat_ALVIANUS%20NESTHA_Konsep%20Pemrograman.pdf" target="_blank" rel="noopener">
+          <div class="cert-noimg" style="--accent:var(--amber)">
+            <div class="cert-noimg-pattern"></div>
+            <div class="seal">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"></circle><path d="M8 12.3l2.6 2.6L16 9"></path></svg>
+            </div>
+            <span class="cert-noimg-tag">Programming</span>
             <span class="cert-thumb-badge">PDF</span>
           </div>
           <div class="cert-body">
@@ -973,9 +1212,13 @@
           </div>
         </a>
 
-        <a class="cert-card reveal" href="assets/Sertifikat_ALVIANUS NESTHA_Fundamental Junior Web Developer.pdf" target="_blank" rel="noopener">
-          <div class="cert-thumb">
-            <img src="assets/anzi.png" alt="Sertifikat Fundamental Junior Web Developer Digital Talent Scholarship">
+        <a class="cert-card reveal" href="assets/Sertifikat_ALVIANUS%20NESTHA_Fundamental%20Junior%20Web%20Developer.pdf" target="_blank" rel="noopener">
+          <div class="cert-noimg" style="--accent:var(--signal)">
+            <div class="cert-noimg-pattern"></div>
+            <div class="seal">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"></circle><path d="M8 12.3l2.6 2.6L16 9"></path></svg>
+            </div>
+            <span class="cert-noimg-tag">Web Dev</span>
             <span class="cert-thumb-badge">PDF</span>
           </div>
           <div class="cert-body">
@@ -984,9 +1227,14 @@
             <div class="cert-link-hint">Lihat sertifikat asli →</div>
           </div>
         </a>
- <a class="cert-card reveal" href="assets/sertifikat-intermediate-web-developer.pdf" target="_blank" rel="noopener">
-          <div class="cert-thumb">
-            <img src="assets/anzi.png" alt="Sertifikat Intermediate Junior Web Developer Digital Talent Scholarship">
+
+        <a class="cert-card reveal" href="assets/sertifikat-intermediate-web-developer.pdf" target="_blank" rel="noopener">
+          <div class="cert-noimg" style="--accent:var(--amber)">
+            <div class="cert-noimg-pattern"></div>
+            <div class="seal">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"></circle><path d="M8 12.3l2.6 2.6L16 9"></path></svg>
+            </div>
+            <span class="cert-noimg-tag">Web Dev</span>
             <span class="cert-thumb-badge">PDF</span>
           </div>
           <div class="cert-body">
@@ -995,6 +1243,9 @@
             <div class="cert-link-hint">Lihat sertifikat asli →</div>
           </div>
         </a>
+
+      </div>
+    </div>
   </section>
 
   <!-- ORGANISASI -->
@@ -1067,49 +1318,238 @@
   </div>
 </footer>
 
-<script>
-  // scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const timelineItems = document.querySelectorAll('.t-item');
+<button class="back-to-top" id="backToTop" aria-label="Kembali ke atas halaman">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M6 11l6-6 6 6"></path></svg>
+</button>
 
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting){
-        entry.target.classList.add('in-view');
-      }
+<script>
+(function(){
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ---- scroll reveal ---- */
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
     });
   }, { threshold: 0.15 });
+  revealEls.forEach(function(el){ revealObserver.observe(el); });
 
-  revealEls.forEach(el => revealObserver.observe(el));
+  /* ---- stagger delays for grids ---- */
+  function stagger(selector){
+    document.querySelectorAll(selector).forEach(function(group){
+      Array.prototype.slice.call(group.children).forEach(function(child, i){
+        child.style.setProperty('--d', (i * 0.08) + 's');
+      });
+    });
+  }
+  stagger('.skill-groups');
+  stagger('.ach-grid');
+  stagger('.cert-grid');
+  stagger('.org-grid');
 
-  const timelineObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting){
-        entry.target.classList.add('in-view');
-      }
+  /* ---- timeline in-view dots ---- */
+  var timelineItems = document.querySelectorAll('.t-item');
+  var timelineObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
     });
   }, { threshold: 0.4 });
+  timelineItems.forEach(function(el){ timelineObserver.observe(el); });
 
-  timelineItems.forEach(el => timelineObserver.observe(el));
-
-  // timeline progress line tied to scroll
-  const progressEl = document.getElementById('timelineProgress');
-  const timelineWrap = document.querySelector('.timeline');
-
+  /* ---- timeline vertical progress ---- */
+  var timelineProgressEl = document.getElementById('timelineProgress');
+  var timelineWrap = document.querySelector('.timeline');
   function updateTimelineProgress(){
-    if (!timelineWrap || !progressEl) return;
-    const rect = timelineWrap.getBoundingClientRect();
-    const viewportH = window.innerHeight;
-    const total = rect.height;
-    let progressed = viewportH * 0.75 - rect.top;
+    if (!timelineWrap || !timelineProgressEl) return;
+    var rect = timelineWrap.getBoundingClientRect();
+    var viewportH = window.innerHeight;
+    var total = rect.height;
+    var progressed = viewportH * 0.75 - rect.top;
     progressed = Math.max(0, Math.min(progressed, total));
-    const pct = total > 0 ? (progressed / total) * 100 : 0;
-    progressEl.style.height = pct + '%';
+    var pct = total > 0 ? (progressed / total) * 100 : 0;
+    timelineProgressEl.style.height = pct + '%';
   }
 
-  window.addEventListener('scroll', updateTimelineProgress, { passive:true });
+  /* ---- top scroll progress bar ---- */
+  var topProgress = document.getElementById('topProgress');
+  function updateTopProgress(){
+    if (!topProgress) return;
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    topProgress.style.width = pct + '%';
+  }
+
+  /* ---- scrollspy active nav link ---- */
+  var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a, .mobile-nav a'));
+  var spyTargets = navAnchors
+    .map(function(a){ return { a: a, el: document.querySelector(a.getAttribute('href')) }; })
+    .filter(function(x){ return x.el; });
+  function updateScrollSpy(){
+    if (!spyTargets.length) return;
+    var fromTop = window.scrollY + 140;
+    var current = spyTargets[0].el;
+    spyTargets.forEach(function(t){ if (t.el.offsetTop <= fromTop) current = t.el; });
+    navAnchors.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+
+  /* ---- back to top ---- */
+  var backToTop = document.getElementById('backToTop');
+  function updateBackToTop(){
+    if (!backToTop) return;
+    backToTop.classList.toggle('show', window.scrollY > 600);
+  }
+  if (backToTop){
+    backToTop.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+    });
+  }
+
+  /* ---- combined scroll handler ---- */
+  function onScroll(){
+    updateTimelineProgress();
+    updateTopProgress();
+    updateScrollSpy();
+    updateBackToTop();
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', updateTimelineProgress);
-  updateTimelineProgress();
+  onScroll();
+
+  /* ---- mobile nav ---- */
+  var navToggle = document.getElementById('navToggle');
+  var mobileNav = document.getElementById('mobileNav');
+  function setMobileNavOpen(isOpen){
+    if (!navToggle || !mobileNav) return;
+    mobileNav.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    mobileNav.querySelectorAll('a').forEach(function(a){
+      if (isOpen) a.removeAttribute('tabindex'); else a.setAttribute('tabindex', '-1');
+    });
+  }
+  if (navToggle && mobileNav){
+    setMobileNavOpen(false);
+    navToggle.addEventListener('click', function(){
+      setMobileNavOpen(!mobileNav.classList.contains('open'));
+    });
+    mobileNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ setMobileNavOpen(false); });
+    });
+  }
+
+  /* ---- cursor spotlight ---- */
+  var glow = document.querySelector('.cursor-glow');
+  if (glow && canHover && !prefersReduced){
+    window.addEventListener('mousemove', function(e){
+      glow.style.transform = 'translate(' + (e.clientX - 260) + 'px, ' + (e.clientY - 260) + 'px)';
+      glow.classList.add('active');
+    }, { passive: true });
+    document.addEventListener('mouseleave', function(){ glow.classList.remove('active'); });
+  }
+
+  /* ---- magnetic buttons ---- */
+  function attachMagnetic(el, strength){
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      var x = (e.clientX - r.left - r.width / 2) * strength;
+      var y = (e.clientY - r.top - r.height / 2) * strength;
+      el.style.transform = 'translate(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px) scale(1.04)';
+    });
+    el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+  }
+  if (canHover && !prefersReduced){
+    document.querySelectorAll('.btn').forEach(function(b){ attachMagnetic(b, 0.25); });
+  }
+
+  /* ---- tilt on cert cards + profile photo ---- */
+  function attachTilt(el, max, lift){
+    el.addEventListener('mousemove', function(e){
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      var liftPart = lift ? 'translateY(-5px) ' : '';
+      el.style.transform = liftPart + 'perspective(700px) rotateY(' + (px * max).toFixed(2) + 'deg) rotateX(' + (-py * max).toFixed(2) + 'deg)';
+    });
+    el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
+  }
+  if (canHover && !prefersReduced){
+    document.querySelectorAll('.cert-card').forEach(function(el){ attachTilt(el, 6, true); });
+    var photo = document.querySelector('.summary-photo');
+    if (photo) attachTilt(photo, 5, false);
+  }
+
+  /* ---- GPA count-up ---- */
+  var statNum = document.querySelector('.stat-num');
+  if (statNum){
+    var target = parseFloat(statNum.textContent);
+    if (!isNaN(target)){
+      if (prefersReduced){
+        statNum.textContent = target.toFixed(2);
+      } else {
+        var statObserver = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if (entry.isIntersecting){
+              var start = performance.now();
+              var duration = 1200;
+              function tick(now){
+                var p = Math.min((now - start) / duration, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                statNum.textContent = (target * eased).toFixed(2);
+                if (p < 1) requestAnimationFrame(tick); else statNum.textContent = target.toFixed(2);
+              }
+              requestAnimationFrame(tick);
+              statObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        statObserver.observe(statNum);
+      }
+    }
+  }
+
+  /* ---- role typewriter ---- */
+  var roleTextEl = document.getElementById('roleCycleText');
+  var rolePhrases = [
+    'Membangun website dengan PHP & Laravel',
+    'Merancang sistem IoT berbasis Arduino',
+    'Mendigitalkan layanan Kampung Juaq Asa'
+  ];
+  if (roleTextEl){
+    if (prefersReduced){
+      roleTextEl.textContent = rolePhrases[0];
+    } else {
+      var phraseIndex = 0, charIndex = 0, deleting = false;
+      var typeLoop = function(){
+        var current = rolePhrases[phraseIndex];
+        if (!deleting){
+          charIndex++;
+          roleTextEl.textContent = current.slice(0, charIndex);
+          if (charIndex === current.length){
+            deleting = true;
+            setTimeout(typeLoop, 1800);
+            return;
+          }
+          setTimeout(typeLoop, 55);
+        } else {
+          charIndex--;
+          roleTextEl.textContent = current.slice(0, charIndex);
+          if (charIndex === 0){
+            deleting = false;
+            phraseIndex = (phraseIndex + 1) % rolePhrases.length;
+            setTimeout(typeLoop, 400);
+            return;
+          }
+          setTimeout(typeLoop, 28);
+        }
+      };
+      setTimeout(typeLoop, 900);
+    }
+  }
+})();
 </script>
 
 </body>
