@@ -40,7 +40,7 @@ Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian tekni
 
 ## Cara Menjalankan
 
-Tidak perlu build tool atau server khusus — cukup buka `index.html` langsung di browser, atau gunakan live server (mis. ekstensi "Live Server" di VS Code) untuk pengalaman development yang lebih nyaman.
+Tidak perlu build tool atau server khusus, cukup buka `index.html` langsung di browser, atau gunakan live server (mis. ekstensi "Live Server" di VS Code) untuk pengalaman development yang lebih nyaman.
 
 ## Kontak
 
