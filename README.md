@@ -11,14 +11,14 @@ Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian tekni
 
 ## Fitur
 
-- **Desain responsif** — menyesuaikan tampilan dari desktop hingga mobile
-- **Animasi scroll-reveal** — elemen muncul halus saat di-scroll
-- **Efek interaktif** — cursor glow, tombol magnetic, tilt pada kartu sertifikat & foto
-- **Timeline pengalaman kerja** dengan indikator progres dan penanda posisi saat ini
-- **Role typewriter** — teks peran berganti otomatis di bagian hero
-- **Galeri sertifikat** — tautan langsung ke berkas PDF asli
-- **Navigasi scrollspy** — menu aktif otomatis mengikuti posisi scroll
-- **Mendukung `prefers-reduced-motion`** untuk aksesibilitas
+- **Desain responsif** : menyesuaikan tampilan dari desktop hingga mobile
+- **Animasi scroll-reveal** : elemen muncul halus saat di-scroll
+- **Efek interaktif** : cursor glow, tombol magnetic, tilt pada kartu sertifikat & foto
+- **Timeline pengalaman kerja** : dengan indikator progres dan penanda posisi saat ini
+- **Role typewriter** : teks peran berganti otomatis di bagian hero
+- **Galeri sertifikat** : tautan langsung ke berkas PDF asli
+- **Navigasi scrollspy** : menu aktif otomatis mengikuti posisi scroll
+- **Mendukung `prefers-reduced-motion`** : untuk aksesibilitas
 
 ## Struktur Berkas
 
