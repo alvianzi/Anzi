@@ -1,12 +1,13 @@
 # Portofolio Alvianus Nestha
 
-Website portofolio pribadi satu halaman (single-page) untuk Alvianus Nestha — Lead of Information Technology Department/SIMRS di Rumah Sakit Santa Familia, dengan latar belakang IoT dan pengembangan web.
+Website portofolio pribadi satu halaman (single-page) untuk Alvianus Nestha, Lead of Information Technology Department/SIMRS di Rumah Sakit Santa Familia, dengan latar belakang IoT dan pengembangan web.
 
 🔗 Lihat langsung: buka `index.html` di browser
 
 ## Tentang
 
-Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian teknis, pencapaian & sertifikasi, aktivitas organisasi, serta riwayat pendidikan — dikemas dengan tema gelap (dark theme) bernuansa jaringan/sensor sebagai representasi latar belakang IoT.
+Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian teknis, pencapaian & sertifikasi, aktivitas organisasi, serta riwayat pendidikan dikemas dengan tema gelap 
+(dark theme) bernuansa jaringan/sensor sebagai representasi latar belakang IoT.
 
 ## Fitur
 
