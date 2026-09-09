@@ -1,4 +1,4 @@
-function () {
+( function () {
   'use strict';
 
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
