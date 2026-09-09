@@ -13,11 +13,13 @@ Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian tekni
 
 - **Desain responsif** : menyesuaikan tampilan dari desktop hingga mobile
 - **Animasi scroll-reveal** : elemen muncul halus saat di-scroll
-- **Efek interaktif** : cursor glow, tombol magnetic, tilt pada kartu sertifikat & foto
+- **Efek interaktif** : cursor glow, tombol magnetic, tilt pada kartu sertifikat & foto, parallax orb di hero
 - **Timeline pengalaman kerja** : dengan indikator progres dan penanda posisi saat ini
 - **Role typewriter** : teks peran berganti otomatis di bagian hero
 - **Galeri sertifikat** : tautan langsung ke berkas PDF asli
-- **Navigasi scrollspy** : menu aktif otomatis mengikuti posisi scroll
+- **Navigasi scrollspy** : menu aktif otomatis mengikuti posisi scroll, dengan bayangan nav saat discroll
+- **Salin email sekali klik** : klik tombol kontak atau baris email untuk menyalin ke clipboard beserta notifikasi toast
+- **Easter egg** : Konami code (↑↑↓↓←→←→BA) untuk kejutan kecil
 - **Mendukung `prefers-reduced-motion`** : untuk aksesibilitas
 
 ## Struktur Berkas
@@ -25,6 +27,7 @@ Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian tekni
 ```
 ├── index.html      # Markup dan konten halaman
 ├── style.css       # Seluruh styling (variabel warna, layout, animasi)
+├── script.js       # Seluruh interaksi & animasi halaman (vanilla JS)
 ├── assets/
 │   ├── anzi.png / ness.jpeg      # Foto profil
 │   ├── favicon_io/                # Ikon situs
@@ -35,12 +38,12 @@ Portofolio ini menampilkan profil profesional, riwayat pekerjaan, keahlian tekni
 ## Teknologi
 
 - HTML5 & CSS3 murni (tanpa framework)
-- Vanilla JavaScript (Intersection Observer untuk animasi scroll)
+- Vanilla JavaScript (`script.js`) — Intersection Observer untuk animasi scroll, Clipboard API untuk salin email
 - Google Fonts: Space Grotesk, Inter, JetBrains Mono
 
 ## Cara Menjalankan
 
-Tidak perlu build tool atau server khusus, cukup buka `index.html` langsung di browser, atau gunakan live server (mis. ekstensi "Live Server" di VS Code) untuk pengalaman development yang lebih nyaman.
+Tidak perlu build tool atau server khusus, cukup buka `index.html` langsung di browser (pastikan `style.css` dan `script.js` berada di folder yang sama), atau gunakan live server (mis. ekstensi "Live Server" di VS Code) untuk pengalaman development yang lebih nyaman.
 
 ## Kontak
 
