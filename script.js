@@ -1,4 +1,3 @@
-
 (function () {
   'use strict';
 
@@ -80,7 +79,7 @@
     });
   }
 
- 
+  var navEl = document.querySelector('.nav');
   function updateNavScrolled() {
     if (!navEl) return;
     navEl.classList.toggle('is-scrolled', window.scrollY > 12);
