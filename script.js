@@ -1,4 +1,5 @@
-( function () {
+
+(function () {
   'use strict';
 
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -79,7 +80,7 @@
     });
   }
 
-  var navEl = document.querySelector('.nav');
+ 
   function updateNavScrolled() {
     if (!navEl) return;
     navEl.classList.toggle('is-scrolled', window.scrollY > 12);
