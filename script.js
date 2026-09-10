@@ -5,6 +5,7 @@
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+  
   var revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
@@ -14,11 +15,9 @@
     }, { threshold: 0.15 });
     revealEls.forEach(function (el) { revealObserver.observe(el); });
   } else {
-    // fallback: langsung tampilkan semua jika browser tidak mendukung
     revealEls.forEach(function (el) { el.classList.add('in-view'); });
   }
 
-  /* ---- stagger delay untuk grid ---- */
   function stagger(selector) {
     document.querySelectorAll(selector).forEach(function (group) {
       Array.prototype.slice.call(group.children).forEach(function (child, i) {
@@ -31,6 +30,7 @@
   stagger('.cert-grid');
   stagger('.org-grid');
 
+  
   var timelineItems = document.querySelectorAll('.t-item');
   if ('IntersectionObserver' in window) {
     var timelineObserver = new IntersectionObserver(function (entries) {
@@ -56,7 +56,7 @@
     timelineProgressEl.style.height = pct + '%';
   }
 
- 
+  
   var topProgress = document.getElementById('topProgress');
   function updateTopProgress() {
     if (!topProgress) return;
@@ -66,6 +66,7 @@
     topProgress.style.width = pct + '%';
   }
 
+  
   var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a, .mobile-nav a'));
   var spyTargets = navAnchors
     .map(function (a) { return { a: a, el: document.querySelector(a.getAttribute('href')) }; })
@@ -80,12 +81,14 @@
     });
   }
 
- 
+  
+  var navEl = document.querySelector('.nav');
   function updateNavScrolled() {
     if (!navEl) return;
     navEl.classList.toggle('is-scrolled', window.scrollY > 12);
   }
 
+  
   var backToTop = document.getElementById('backToTop');
   function updateBackToTop() {
     if (!backToTop) return;
@@ -109,7 +112,7 @@
   window.addEventListener('resize', updateTimelineProgress);
   onScroll();
 
- 
+  
   var navToggle = document.getElementById('navToggle');
   var mobileNav = document.getElementById('mobileNav');
   function setMobileNavOpen(isOpen) {
@@ -129,7 +132,6 @@
     mobileNav.querySelectorAll('a').forEach(function (a) {
       a.addEventListener('click', function () { setMobileNavOpen(false); });
     });
-    // tutup menu mobile dengan tombol Escape
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && mobileNav.classList.contains('open')) setMobileNavOpen(false);
     });
@@ -145,6 +147,7 @@
     document.addEventListener('mouseleave', function () { glow.classList.remove('active'); });
   }
 
+  
   function attachMagnetic(el, strength) {
     el.addEventListener('mousemove', function (e) {
       var r = el.getBoundingClientRect();
@@ -158,7 +161,6 @@
     document.querySelectorAll('.btn').forEach(function (b) { attachMagnetic(b, 0.25); });
   }
 
- 
   function attachTilt(el, max, lift) {
     el.addEventListener('mousemove', function (e) {
       var r = el.getBoundingClientRect();
@@ -175,7 +177,7 @@
     if (photo) attachTilt(photo, 5, false);
   }
 
-
+  
   var heroEl = document.querySelector('.hero');
   var orbs = document.querySelectorAll('.hero-orb');
   if (heroEl && orbs.length && canHover && !prefersReduced) {
@@ -222,8 +224,7 @@
     }
   }
 
- 
-  var roleTextEl = document.getElementById('roleCycleText');
+    var roleTextEl = document.getElementById('roleCycleText');
   var rolePhrases = [
     'Memimpin unit IT/SIMRS di Rumah Sakit Santa Familia',
     'Membangun website dengan PHP & Laravel',
@@ -262,7 +263,7 @@
     }
   }
 
- 
+  
   var toastEl = null;
   var toastTimer = null;
   function showToast(message) {
@@ -300,12 +301,11 @@
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(email).then(function () {
           showToast('Email disalin: ' + email);
-        }).catch(function () { /* diam-diam gagal, biarkan mailto tetap jalan */ });
+        }).catch(function () { });
       }
     });
   });
 
- 
   document.querySelectorAll('.fact').forEach(function (fact) {
     var key = fact.querySelector('.fact-k');
     var value = fact.querySelector('.fact-v');
@@ -324,8 +324,7 @@
     }
   });
 
-  
-  var footBottom = document.querySelector('.foot-bottom');
+    var footBottom = document.querySelector('.foot-bottom');
   if (footBottom && !/\d{4}/.test(footBottom.textContent)) {
     footBottom.textContent += '  ·  © ' + new Date().getFullYear();
   }
@@ -341,24 +340,6 @@
       target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
       history.pushState(null, '', id);
     });
-  });
-
-  
-  var konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-  var konamiPos = 0;
-  document.addEventListener('keydown', function (e) {
-    var key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    if (key === konami[konamiPos]) {
-      konamiPos++;
-      if (konamiPos === konami.length) {
-        konamiPos = 0;
-        document.body.classList.add('easter-egg-spin');
-        showToast('🎉 Mode rahasia aktif!');
-        setTimeout(function () { document.body.classList.remove('easter-egg-spin'); }, 2000);
-      }
-    } else {
-      konamiPos = (key === konami[0]) ? 1 : 0;
-    }
   });
 
 })();
